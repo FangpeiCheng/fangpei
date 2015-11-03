@@ -4,6 +4,7 @@ class StaticPagesController < ApplicationController
 
   def help
   end
-  def about      # NEW
+  def about      
+  	
   end
 end
