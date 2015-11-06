@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   
 
   resources :users
+  resources :microposts, only: [:create, :destroy]     # NEW LINE
   root 'static_pages#home'
 
           get 'help'    => 'static_pages#help'

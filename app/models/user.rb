@@ -1,4 +1,5 @@
 class User < ActiveRecord::Base
+  has_many :microposts, dependent: :destroy   #  CHANGED
 	attr_accessor :remember_token
 	before_save { self.email = email.downcase }
 
@@ -31,7 +32,10 @@ class User < ActiveRecord::Base
         BCrypt::Password.new(remember_digest).is_password?(remember_token)
       end
       # Forgets a user.
-       def forget
-          update_attribute(:remember_digest, nil)
-       end
+      def forget
+        update_attribute(:remember_digest, nil)
+      end
+      def feed
+        Micropost.where("user_id = ?", id)
+      end
 end

@@ -1,6 +1,7 @@
 class UsersController < ApplicationController
   def show
         @user = User.find(params[:id])
+        @microposts = @user.microposts    # NEW LINE
       end
   def new
         @user = User.new
@@ -17,4 +18,18 @@ class UsersController < ApplicationController
           render 'new'
         end
   end
+
+  # UPDATED IMPLEMENTATION
+  def destroy
+            @micropost.destroy
+            redirect_to root_url
+  end
+
+  # NEW PRIVATE METHOD
+  private
+
+    def correct_user
+      @micropost = current_user.microposts.find_by(id: params[:id])
+      redirect_to root_url if @micropost.nil?
+    end
 end
