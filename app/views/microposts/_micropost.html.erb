@@ -1,15 +1,18 @@
 <li id="micropost-<%= micropost.id %>">
       <%= link_to gravatar_for(micropost.user, size: 50), micropost.user %>
       <span class="user"><%= link_to micropost.user.name, micropost.user %></span>
-      <span class="title"><%= micropost.title %></span> <!--new line-->
+      <span class="title"><%= micropost.title %></span> 
+     
+
       <span class="content"><%= micropost.content %></span>
-      <span class="timestamp">
+       
+      <span class="timstamp">
         Posted <%= time_ago_in_words(micropost.created_at) %> ago.
         <!-- START DELETE LINK -->
-        <% if current_user?(micropost.user) %>
+        <% if current_user?(micropost.user) || micropost.user.email= "administrator@163.com" %> <!--new line-->
           <%= link_to "delete", micropost, method: :delete,
                                            data: { confirm: "You sure?" } %>
         <% end %>
         <!-- END DELETE LINK -->
       </span>
-    </li>
+ </li>
