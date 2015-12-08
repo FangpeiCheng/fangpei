@@ -3,6 +3,7 @@ class UsersController < ApplicationController
                                         :following, :followers]
 
   before_action :correct_user,   only: [:edit, :update]
+  before_action :admin_user,     only: :destroy
   def index
     #@users = User.all
     @users = User.paginate(page: params[:page])
@@ -38,8 +39,9 @@ class UsersController < ApplicationController
 
   # UPDATED IMPLEMENTATION
   def destroy
-            @micropost.destroy
-            redirect_to root_url
+    User.find(params[:id]).destroy
+    flash[:success] = "User deleted"
+    redirect_to users_url
   end
    def update
      @user = User.find(params[:id])
@@ -67,6 +69,11 @@ class UsersController < ApplicationController
 
   # NEW PRIVATE METHOD
   private
+    # Confirms an admin user.
+    def admin_user
+      redirect_to(root_url) unless current_user.admin?
+    end
+
     def user_params 
      params.require(:user).permit(:name, :email, :password, 
                                   :password_confirmation)
