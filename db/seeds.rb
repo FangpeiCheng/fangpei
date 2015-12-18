@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 User.create!(name:  "Example User",
              email: "example@railstutorial.org",
              password:              "foobar",
@@ -16,3 +17,5 @@ User.create!(name:  "Example User",
 
 
 end
+=======
+>>>>>>> 667b39de0afd25af9b94bb9b6ff35f27d65fafa9
