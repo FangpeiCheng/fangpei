@@ -5,5 +5,5 @@ class ApplicationController < ActionController::Base
   protect_from_forgery
   include SessionsHelper
 
-  WillPaginate.per_page = 2
+  WillPaginate.per_page = 5
 end
