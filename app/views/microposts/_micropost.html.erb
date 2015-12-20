@@ -9,7 +9,7 @@
       <span class="timstamp">
         Posted <%= time_ago_in_words(micropost.created_at) %> ago.
         <!-- START DELETE LINK -->
-        <% if current_user?(micropost.user) || micropost.user.email= "administrator@163.com" %> <!--new line-->
+        <% if current_user?(micropost.user) %> <!--new line-->
           <%= link_to "delete", micropost, method: :delete,
                                            data: { confirm: "You sure?" } %>
         <% end %>
