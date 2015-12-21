@@ -24,5 +24,31 @@
 
         <%= link_to "Sign up now!", signup_path, class: "btn btn-lg btn-primary" %>
       </div>
+
+      <div id="myCarousel" class="carousel slide">
+   <!-- （Carousel）indicator -->
+   <ol class="carousel-indicators">
+      <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+      <li data-target="#myCarousel" data-slide-to="1"></li>
+      
+   </ol>   
+   <!-- （Carousel）content-->
+   <div class="carousel-inner">
+      <div class="item active">
+         <%= image_tag("003.jpg", alt:"First") %>
+      </div>
+      
+      <div class="item">
+         <%= image_tag("001.jpg") %>
+      </div>
+   </div>
+   <!-- (Carousel）navigation -->
+   <a class="carousel-control left" href="#myCarousel" 
+      data-slide="prev">&lsaquo;</a>
+   <a class="carousel-control right" href="#myCarousel" 
+      data-slide="next">&rsaquo;</a>
+</div> 
+
      
+
     <% end %>
