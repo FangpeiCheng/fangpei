@@ -1,0 +1,50 @@
+<% if logged_in? %>
+<!--div class="tags-cloud glassy-bg"-->
+<div class="panel">
+  <h4>Tag Cloud</h4>
+  <% tag_cloud Tag.counts, %w{css1 css2 css3 css4} do |tag, css_class| %>
+    <%= link_to tag.name, tag_path(tag.name), class: css_class %>
+  <% end %>
+</div>
+<%= link_to new_micropost_path, class: "btn btn-primary", data: { no_turbolink: true } do %>
+      <i class="glyphicon glyphicon-plus"></i> New Post
+    <% end %></br></br>
+
+<ol class="microposts">
+
+<% @microposts.each do |micropost| %> 
+<div class="jumbotron">
+
+  <%= link_to gravatar_for(micropost.user, size: 50), micropost.user %>
+  <span class="user"><%= link_to micropost.user.name, micropost.user %></span>
+  <span class="content"><%= link_to micropost.title, micropost%></span>
+  <span class="content">
+    <%= micropost.content %>
+    <%= image_tag micropost.picture.url if micropost.picture? %>
+  </span>
+  <span class="content">
+  Tag: <%=raw tag_links(micropost.all_tags) %>
+  </span>
+  <span class="timestamp">
+    Posted <%= time_ago_in_words(micropost.created_at) %> ago.
+  </span>
+</div>
+<%end%>
+
+</ol>
+  
+
+    <%= link_to new_micropost_path, class: "btn btn-primary", data: { no_turbolink: true } do %>
+      <i class="glyphicon glyphicon-plus"></i> New Post
+    <% end %></br>
+
+    <%#=link_to "New Post", newpost_path, class: "btn btn-lg btn-primary" %>
+    <%#=link_to "New Post", newpost_path%>
+    <%= will_paginate %>
+<% else %>
+      <div class="center jumbotron">
+        <h1>Welcome to the Forum App</h1>
+        <%#= link_to "Sign up now!", signup_path, class: "btn btn-lg btn-primary" %>
+    </div>
+       
+<% end %>

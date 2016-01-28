@@ -1,0 +1,20 @@
+ <%= form_for(@micropost, html: { multipart: true }) do |f| %>
+ <%= render 'shared/error_messages', object: f.object %>
+ <div class="row">
+	 <div class="field">
+	 	<%= f.label :title %>
+  		<%= f.text_field :title, placeholder: "Title here" %>
+  		<%= f.label :content %>
+   	 	<%= f.text_area :content, placeholder: "Content here" %>
+        <%= f.label :tag %>
+        <%= f.text_field :all_tags, placeholder: "Tags separated with comma" %>
+    
+ 	 </div>
+   <%= f.label :picture %>
+   <span class="picture">
+    <%= f.file_field :picture %>
+  </span>
+   <%= f.submit "Post", class: "btn btn-primary" %>
+
+</div>
+<% end %>

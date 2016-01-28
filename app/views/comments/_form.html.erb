@@ -1,0 +1,5 @@
+<%= form_for [@micropost,@micropost.comments.build] do |f| %>  
+  <p><%= f.text_area :content, :size => '5x5' %> </p> 
+  <%#= f.text_area :comment, :size => '10x10' %> 
+  <p><%= f.submit "Comment" %> </p>  
+<% end %> 

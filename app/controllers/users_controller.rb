@@ -9,20 +9,16 @@ class UsersController < ApplicationController
     @users = User.paginate(page: params[:page])
   end
   def show
+        if logged_in?
         @user = User.find(params[:id])
-        #@microposts = @user.microposts    # NEW LINE
-        @microposts = @user.microposts.paginate(page: params[:page])
+        @feed_items = current_user.feed.paginate(page: params[:page])
+        end
       end
   def new
         @user = User.new
       end
   def create
-        secure_params = params.require(:user).permit(:name, :email,
-                                 :password, :password_confirmation)
         @user = User.new(user_params)
-
-        #@user = User.new(user_params)
-
 
         if @user.save
           #log_in @user  #new line
@@ -38,12 +34,15 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
   end
 
+  
+  #def destroy
+   # User.find(params[:id]).destroy
+    #flash[:success] = "User deleted"
+    #redirect_to users_url
+  #end
+
+  
   # UPDATED IMPLEMENTATION
-  def destroy
-    User.find(params[:id]).destroy
-    flash[:success] = "User deleted"
-    redirect_to users_url
-  end
    def update
      @user = User.find(params[:id])
     if @user.update_attributes(user_params)#user_params
@@ -95,7 +94,7 @@ class UsersController < ApplicationController
     def correct_user
       #new line
       @user = User.find(params[:id])
-      redirect_to(root_url) unless @user == current_user
+      redirect_to(root_url) unless current_user?(@user)
 
       #@micropost = current_user.microposts.find_by(id: params[:id])
       #redirect_to root_url if @micropost.nil?

@@ -11,7 +11,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151208144447) do
+ActiveRecord::Schema.define(version: 20160127233204) do
+
+  create_table "comments", force: :cascade do |t|
+    t.text     "content"
+    t.integer  "micropost_id"
+    t.integer  "user_id"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+  end
+
+  add_index "comments", ["micropost_id"], name: "index_comments_on_micropost_id"
+  add_index "comments", ["user_id"], name: "index_comments_on_user_id"
 
   create_table "microposts", force: :cascade do |t|
     t.text     "content"
@@ -19,6 +30,7 @@ ActiveRecord::Schema.define(version: 20151208144447) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string   "title"
+    t.string   "picture"
   end
 
   add_index "microposts", ["user_id", "created_at"], name: "index_microposts_on_user_id_and_created_at"
@@ -34,6 +46,22 @@ ActiveRecord::Schema.define(version: 20151208144447) do
   add_index "relationships", ["followed_id"], name: "index_relationships_on_followed_id"
   add_index "relationships", ["follower_id", "followed_id"], name: "index_relationships_on_follower_id_and_followed_id", unique: true
   add_index "relationships", ["follower_id"], name: "index_relationships_on_follower_id"
+
+  create_table "taggings", force: :cascade do |t|
+    t.integer  "micropost_id"
+    t.integer  "tag_id"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+  end
+
+  add_index "taggings", ["micropost_id"], name: "index_taggings_on_micropost_id"
+  add_index "taggings", ["tag_id"], name: "index_taggings_on_tag_id"
+
+  create_table "tags", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "users", force: :cascade do |t|
     t.string   "name"

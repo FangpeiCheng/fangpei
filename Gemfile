@@ -3,6 +3,11 @@ source 'https://rubygems.org'
     gem 'rails',        '4.2.2'
     gem 'sass-rails',   '5.0.2'
     gem 'uglifier',     '2.5.3'
+    gem 'carrierwave',             '0.10.0'
+    gem 'mini_magick',             '3.8.0'
+    gem 'fog',                     '1.36.0'
+
+
     gem 'coffee-rails', '4.1.0'
     gem 'jquery-rails', '4.0.3'
     gem 'turbolinks',   '2.3.0'
