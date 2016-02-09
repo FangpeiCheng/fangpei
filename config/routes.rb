@@ -10,14 +10,17 @@ Rails.application.routes.draw do
           resources :comments
         end
         resources :relationships,       only: [:create, :destroy]
-
+        
+        resources :dreams do 
+          resources :goals
+        end
         root 'microposts#index'
 
           get 'dreammaker'   => 'static_pages#dreammaker'
           get 'about'   => 'static_pages#about'
           get 'contact' => 'static_pages#contact'
           get 'signup'  => 'users#new'
-          get 'newpost' => 'posts#new'
+          get 'newmicropost' => 'microposts#new'
           get 'tags/:tag', to: 'microposts#index', as: "tag"
           
 

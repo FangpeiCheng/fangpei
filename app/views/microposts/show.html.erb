@@ -7,21 +7,31 @@
     <%= image_tag @micropost.picture.url if @micropost.picture? %>
   </span>
   
- </section></br></br>
+ </section><br/><br/>
 
 
 
  <section class="comment">
  
-  <p2>Comment <span class="badge"><%= @micropost.comments.count%></span></p2>
+  <p2>Comment <span class="badge"><%= @micropost.comments.count%></span></p2></br>
    <% @micropost.comments.each do |comment| %>
-     <%= comment.user %></br>
-     <%= comment.content %></br>
+     <%= comment.content %>
+     - <%= link_to comment.user.name, comment.user %>
+     <%#= comment.user.name %>
+     
+    <span class="timestamp">
+    Commented <%= time_ago_in_words(comment.created_at) %> ago.
+    </span>
+
+    <%= link_to "Delete", [comment.micropost, comment], method: :delete,
+                                           data: { confirm: "You sure?" } %>
+
+   <br/>
    <%end%>
 
  </section>
  
-</br>
+<br/>
 
  <p>Reply to the post</p>
  <%= render 'comments/form'%>

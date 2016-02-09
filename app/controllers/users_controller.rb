@@ -9,11 +9,12 @@ class UsersController < ApplicationController
     @users = User.paginate(page: params[:page])
   end
   def show
-        if logged_in?
+        
         @user = User.find(params[:id])
-        @feed_items = current_user.feed.paginate(page: params[:page])
-        end
-      end
+        @microposts = @user.microposts.paginate(page: params[:page])
+        #@feed_items = current_user.feed.paginate(page: params[:page])
+       
+  end
   def new
         @user = User.new
       end
@@ -35,11 +36,11 @@ class UsersController < ApplicationController
   end
 
   
-  #def destroy
-   # User.find(params[:id]).destroy
-    #flash[:success] = "User deleted"
-    #redirect_to users_url
-  #end
+  def destroy
+    User.find(params[:id]).destroy
+    flash[:success] = "User deleted"
+    redirect_to users_url
+  end
 
   
   # UPDATED IMPLEMENTATION

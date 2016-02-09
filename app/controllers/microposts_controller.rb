@@ -1,21 +1,22 @@
 class MicropostsController < ApplicationController
   before_action :find_micropost, only: [:show, :edit, :update, :destroy]
   before_action :correct_user,   only: :destroy
+  
   def index
     if params[:search]
-          @microposts = Micropost.search(params[:search]).paginate(page: params[:page]).order("created_at DESC")
+          @microposts = Micropost.search(params[:search]).order("created_at DESC").paginate(page: params[:page])
         elsif params[:tag]
-          @microposts = Micropost.tagged_with(params[:tag]).paginate(page: params[:page])
+          @microposts = Micropost.tagged_with(params[:tag]).order("created_at DESC").paginate(page: params[:page])
         else
-        #@posts = Post.all.order("created_at DESC")
-    @microposts = Micropost.paginate(page: params[:page]).order("created_at DESC")
-    #@users = User.paginate(page: params[:page])
+        #@microposts = Micropost.all.order("created_at DESC")
+          @microposts = Micropost.order("created_at DESC").paginate(page: params[:page])
+        #@users = User.paginate(page: params[:page])
     
-    if logged_in?
+          if logged_in?
             @micropost  = current_user.microposts.build
-            @feed_items = current_user.feed
-         end
-     end
+            #@feed_items = current_user.feed
+          end
+        end
   end
 
   def new 
@@ -34,10 +35,8 @@ class MicropostsController < ApplicationController
         end
   end
 
-
-
   def show
-    
+    #@comment=Comment.new 
   end
 
   def edit
@@ -53,7 +52,7 @@ class MicropostsController < ApplicationController
 
   def destroy
     @micropost.destroy
-        redirect_to root_path
+    redirect_to root_path
   end
 
 
@@ -63,6 +62,7 @@ class MicropostsController < ApplicationController
   def find_micropost
     @micropost = Micropost.find(params[:id])
   end
+
   def micropost_params
     params.require(:micropost).permit(:title, :content, :all_tags, :picture)
   end
@@ -70,7 +70,7 @@ class MicropostsController < ApplicationController
   def correct_user
               @micropost = current_user.microposts.find_by(id: params[:id])
               redirect_to root_url if @micropost.nil?
-      end
+  end
 
 end
 

@@ -1,5 +1,5 @@
 @import "bootstrap-sprockets";
-    @import "bootstrap";
+@import "bootstrap";
     /* mixins, variables, etc. */
 
     $gray-medium-light: #eaeaea;
@@ -9,11 +9,22 @@
       -webkit-box-sizing: border-box;
       box-sizing:         border-box;
     }
+    
+   
+
+
+    .filter {
+      background-color: rgba(215,226,241,0.9);
+      padding: 20px 30px 10px 30px;
+      border-radius: 10px;
+    }
+
+
 
     /* universal */
 
     body {
-      padding-top: 60px;
+      padding-top: 45px;
       
     }
 
@@ -42,9 +53,16 @@
     h1 {
       font-size: 3em;
       letter-spacing: -2px;
-      margin-bottom: 30px;
+      margin-bottom: 10px;
       text-align: center;
     }
+    h3 {
+      font-size: 1.8em;
+      letter-spacing: -2px;
+      margin-bottom: 10px;
+      text-align: center;
+    }
+
 
     h2 {
       font-size: 1.2em;

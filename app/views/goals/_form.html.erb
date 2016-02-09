@@ -1,0 +1,49 @@
+<div class="filter">
+<%= form_for [@dream, @dream.goals.build] do |f| %>  
+<%#= form_for @goal do |f| %>
+<div class="row">
+  <div class="col-md-12">
+  	<h3><%= link_to @dream.user.name, @dream.user %> create short-term goals for the dream <%= link_to @dream.name, '#'%> by <%= @dream.date %></h3>
+<%#= @dream.content %>
+</div>
+</div>
+
+ <%= render 'shared/error_messages', object: f.object %>
+ <div class="row">
+      <div class="col-md-8">
+        <%= f.label :Goal %>
+      </div>
+      <div class="col-md-4">
+        <%= f.label :Deadline %>
+      </div>
+</div>
+<div class="row">
+      <div class="col-md-8">
+        <%= f.text_field :name, :required => true, placeholder: "Goal here" %>
+      </div>
+      <div class="col-md-4">
+        <%= f.date_field :deadline %>
+      </div>
+      
+</div>
+<div class="row">
+      <div class="col-md-12">
+        <%= f.label :Description %>
+      </div>
+</div>
+<div class="row">
+      <div class="col-md-10">
+        <%= f.text_area :content, :required => true, placeholder: "Description here" %>
+         <!--required:true --> <!--:required => true,-->
+      </div>
+      <div class="col-md-2">
+        <%= f.submit "Create", class: "btn btn-primary" %>
+      </div>
+      
+</div>
+</div>
+
+<% end %>
+</div>
+
+

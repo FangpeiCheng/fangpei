@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyText
+  content: MyText
+  deadline: MyString
+  user_id: 
+  dream_id: 
+
+two:
+  name: MyText
+  content: MyText
+  deadline: MyString
+  user_id: 
+  dream_id: 

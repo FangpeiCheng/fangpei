@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160127233204) do
+ActiveRecord::Schema.define(version: 20160207205608) do
 
   create_table "comments", force: :cascade do |t|
     t.text     "content"
@@ -23,6 +23,32 @@ ActiveRecord::Schema.define(version: 20160127233204) do
 
   add_index "comments", ["micropost_id"], name: "index_comments_on_micropost_id"
   add_index "comments", ["user_id"], name: "index_comments_on_user_id"
+
+  create_table "dreams", force: :cascade do |t|
+    t.text     "name"
+    t.text     "content"
+    t.string   "date"
+    t.integer  "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "dreams", ["user_id", "created_at"], name: "index_dreams_on_user_id_and_created_at"
+  add_index "dreams", ["user_id"], name: "index_dreams_on_user_id"
+
+  create_table "goals", force: :cascade do |t|
+    t.text     "name"
+    t.text     "content"
+    t.string   "deadline"
+    t.integer  "user_id"
+    t.integer  "dream_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "goals", ["dream_id"], name: "index_goals_on_dream_id"
+  add_index "goals", ["user_id", "created_at"], name: "index_goals_on_user_id_and_created_at"
+  add_index "goals", ["user_id"], name: "index_goals_on_user_id"
 
   create_table "microposts", force: :cascade do |t|
     t.text     "content"
