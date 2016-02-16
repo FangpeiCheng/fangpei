@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
-
+ruby '2.2.1'
     gem 'rails',        '4.2.2'
     gem 'sass-rails',   '5.0.2'
     gem 'jquery-ui-rails', '~> 4.2.1'
