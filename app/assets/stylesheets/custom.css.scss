@@ -9,9 +9,16 @@
       -webkit-box-sizing: border-box;
       box-sizing:         border-box;
     }
-    
-   
 
+
+    .searchfield span{
+      background-color: #FFF;
+    }
+
+    .searchfield input{
+      border-right-style:none;
+    }
+    
 
     .filter {
       background-color: rgba(215,226,241,0.9);
@@ -289,12 +296,12 @@
       }
       /* Users index */
 
-.users {
-  list-style: none;
-  margin: 0;
-  li {
-    overflow: auto;
-    padding: 10px 0;
-    border-bottom: 1px solid $gray-lighter;
-  }
-}
+    .users {
+       list-style: none;
+       margin: 0;
+       li {
+         overflow: auto;
+         padding: 10px 0;
+         border-bottom: 1px solid $gray-lighter;
+       }
+     }
