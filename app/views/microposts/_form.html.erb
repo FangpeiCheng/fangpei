@@ -11,11 +11,11 @@
     <%#= f.label :tag %>
       <%#= f.text_field :all_tags, placeholder: "Tags separated with comma" %>
     
- 	 <!--
-   <%#= f.label :picture %>
+ 	 
+   <%= f.label :picture %>
    <span class="picture">
-    <%#= f.file_field :picture %>
-  </span>-->
+    <%= f.file_field :picture %>
+  </span>
    <%= f.submit "Post", class: "btn btn-primary" %>
    <%=link_to "Cancel", root_path%>
   </div>
