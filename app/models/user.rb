@@ -3,6 +3,9 @@ class User < ActiveRecord::Base
   has_many :goals, dependent: :destroy #new line
   has_many :microposts, dependent: :destroy   #  CHANGED
   has_many :comments, dependent: :destroy
+
+  has_many :post_likes #like function
+
   has_many :active_relationships, class_name:  "Relationship",
                                   foreign_key: "follower_id",
                                   dependent:   :destroy
@@ -23,6 +26,18 @@ class User < ActiveRecord::Base
      validates :password, presence: true, length: { minimum: 6 }, allow_nil: true#new line
      validates :password_confirmation, presence: true
      has_secure_password
+
+     #like function
+     def total_likes
+       PostLike.joins(:micropost).where(microposts: {user_id: self.id}).sum('value')
+     end
+
+     def can_like_for?(micropost)
+       post_likes.build(value: 1, micropost: micropost).valid?
+     end
+
+     
+
      # Returns the hash digest of a string.
       def User.digest(string)
         cost = ActiveModel::SecurePassword.min_cost ? BCrypt::Engine::MIN_COST :
@@ -58,9 +73,10 @@ class User < ActiveRecord::Base
       def feed
         following_ids = "SELECT followed_id FROM relationships
                      WHERE  follower_id = :user_id"
-        Micropost.where("user_id IN (#{following_ids})
-                     OR user_id = :user_id", user_id: id)
+        #Micropost.where("user_id IN (#{following_ids})
+                     #OR user_id = :user_id", user_id: id)
         #Micropost.all    #where("user_id = ?", id)
+        Dream.where("user_id = ?", id) #new line
       end
       # Follows a user.
   def follow(other_user)

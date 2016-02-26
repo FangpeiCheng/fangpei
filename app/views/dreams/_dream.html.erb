@@ -1,0 +1,19 @@
+  <li id="dream-<%= dream.id %>">
+          <div class="timeline-badge info"><i class="glyphicon glyphicon-credit-card"></i></div>
+          <%= dream.date %>
+          <div class="timeline-panel">
+            <div class="timeline-heading">
+              <h4 class="timeline-title"><%= link_to dream.name, new_dream_path %></h4>
+            </div>
+            <div class="timeline-body">
+              <p><%= dream.content %></p>
+              <div class="timestamp"><%= time_ago_in_words(dream.created_at) %> ago<br/>
+              </div>
+              <%= link_to "Create explicit plans", dream %>
+              <%= link_to "Edit", edit_dream_path(dream) %>
+              <%= link_to "Delete", dream, method: :delete,
+                                           data: { confirm: "You sure?" } %>         
+            </div>
+          </div>
+     </li>         
+ 

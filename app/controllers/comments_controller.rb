@@ -8,7 +8,11 @@ class CommentsController < ApplicationController
 		@comment = @micropost.comments.create(params[:comment].permit(:content))
         @comment.user_id = current_user.id
 		if @comment.save
-			redirect_to micropost_path(@micropost)
+			#redirect_to micropost_path(@micropost)
+			respond_to do |format|
+				format.html {redirect_to micropost_path(@micropost)}
+				format.js #render comments/create.js.erb
+			end
 		else
 			render 'new'
 		end

@@ -3,17 +3,33 @@ class Micropost < ActiveRecord::Base
       belongs_to :dream
       
       has_many :comments, dependent: :destroy
+      
+      has_many :post_likes
 
       mount_uploader :picture, PictureUploader
 
       has_many :taggings, dependent: :destroy
       has_many :tags, through: :taggings, dependent: :destroy
       validates :user_id, presence: true
-      validates :content, presence: true, length: { maximum: 140 }
+      validates :content, presence: true, length: { maximum: 200 }
       validates :title, presence: true, length: { maximum: 40 }
       validate  :picture_size
 
       default_scope -> { order(created_at: :desc) }
+
+
+#like function start
+def self.by_likes
+  select('microposts.*, coalesce(value, 0) as likes').
+  joins('left join post_likes on micropost_id=microposts.id').
+  order('likes desc')
+end
+
+def likes
+  read_attribute(:likes) || post_likes.sum(:value)
+end
+#like function end
+
 
   def self.search(query)
     # where(:title, query) -> This would return an exact match of the query

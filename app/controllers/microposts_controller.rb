@@ -2,6 +2,22 @@ class MicropostsController < ApplicationController
   before_action :find_micropost, only: [:show, :edit, :update, :destroy]
   before_action :correct_user,   only: :destroy
   
+  #def index
+  #@haikus = Haiku.by_votes
+#end
+
+#like function 
+def like
+  like = current_user.post_likes.new(value: params[:value], micropost_id: params[:id])
+  if like.save
+    redirect_to :back, notice: "Thank you for voting."
+  else
+    redirect_to :back, alert: "Unable to vote, perhaps you already did."
+  end
+end
+
+
+
   def index
     if params[:search]
           @microposts = Micropost.search(params[:search]).order("created_at DESC").paginate(page: params[:page])

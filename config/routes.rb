@@ -7,6 +7,7 @@ Rails.application.routes.draw do
           end
         end    
         resources :microposts do
+          member {post :like }
           resources :comments
         end
         resources :relationships,       only: [:create, :destroy]

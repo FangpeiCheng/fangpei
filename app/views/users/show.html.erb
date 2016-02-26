@@ -11,15 +11,47 @@
     <%= link_to new_micropost_path, class: "btn btn-primary", data: { no_turbolink: true } do %>
       <i class="glyphicon glyphicon-plus"></i> New Post
     <% end %>
+
+
+    <br/><br/>
+    Obtain <%= current_user.total_likes %> <span class="glyphicon glyphicon-thumbs-up"></span>
+    
   </aside>
+
+
   <div class="col-md-8">
+    <br/>
     <%= render 'follow_form' if logged_in? %>
-    <% if @user.microposts.any? %>
-      <h3>Microposts (<%= @user.microposts.count %>)</h3>
-      <ol class="microposts">
-        <%= render @microposts %>
-      </ol>
-      <%= will_paginate @microposts %>
-    <% end %>
+    <br/>
+    <div class="container">
+      <ul class="nav nav-tabs">
+        
+        <li class="active"><a data-toggle="tab" href="#dream">Dreams (<%= @user.dreams.count %>)</a></li>
+        
+        <li><a data-toggle="tab" href="#micropost">Microposts (<%= @user.microposts.count %>)</a></li>
+    
+      </ul>
+
+      <div class="tab-content">
+
+        <div id="dream" class="tab-pane fade in active">
+          <section class="micropost">
+            <% @user.dreams.each do |dream| %>
+            <!--Here is a problem, if not use <br/>, it will not change line automatically, which need to think-->
+            <span class="user"><%= link_to dream.name, dream %></span><br/>
+            <span class="user"><%= dream.content %></span><br/>
+            <span class="content"><%= dream.date%></span><br/><br/>
+            <%end%>
+          </section>
+        </div>
+
+        <div id="micropost" class="tab-pane fade">
+          <ol class="microposts">
+            <%= render @microposts %>
+          </ol>
+          <%= will_paginate @microposts %>
+        </div>
+      </div>
+    </div>
   </div>
 </div>

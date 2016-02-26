@@ -1,6 +1,10 @@
 <%= form_for [@micropost,@micropost.comments.build] do |f| %>  
- 
-  <p><%= f.text_area :content, :size => '5x5' %> </p> 
-  <%#= f.text_area :comment, :size => '10x10' %> 
-  <p><%= f.submit "Comment" %> </p>  
+  <fieldset>
+  	
+  			<%= f.text_area :content, rows: 2, cols: 60, 
+  		                   placeholder: "write a comment..." %>
+  		
+  			<%= f.submit "Comment", class: 'button' %>
+  		
+</fieldset>
 <% end %> 

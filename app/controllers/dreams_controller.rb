@@ -8,6 +8,7 @@ class DreamsController < ApplicationController
           @dreams = Dream.order("created_at DESC").paginate(page: params[:page])
           if logged_in?
             @dream  = current_user.dreams.build
+            @feed_items = current_user.feed.paginate(page: params[:page])
           end
         
     end
