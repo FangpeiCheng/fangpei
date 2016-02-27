@@ -1,7 +1,9 @@
 class CommentsController < ApplicationController
 	before_action :correct_user,   only: :destroy
   
-
+    def new
+    	@comment = Comment.new
+    end
 
 	def create
 		@micropost = Micropost.find(params[:micropost_id])

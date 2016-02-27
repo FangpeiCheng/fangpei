@@ -1,5 +1,9 @@
 class GoalsController < ApplicationController
 	before_action :correct_user,   only: :destroy
+    
+    def new
+    	@goal = Goal.new
+    end
 
 	def create
 		@dream = Dream.find(params[:dream_id])

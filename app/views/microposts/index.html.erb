@@ -56,7 +56,10 @@
     <!--div class="tags-cloud glassy-bg"-->
     <div class="panel">
       <h4>Tag Cloud</h4>
-      
+      <% tag_cloud Tag.counts, %w{css1 css2 css3 css4} do |tag, css_class| %>
+        <%= link_to tag.name, tag_path(tag.name), class: css_class %>
+      <% end %>
+      <!--each time publish it to heroku, ignore cloud tag-->
     </div>
   </aside>
 </div>
@@ -66,8 +69,6 @@
 <% else %>
       <div class="center jumbotron"> <!--"center jumbotron"-->
         <h1>Welcome to the FiveYears</h1>
-        
-
         <%#= link_to "Sign up now!", signup_path, class: "btn btn-lg btn-primary" %>
     </div>
        
