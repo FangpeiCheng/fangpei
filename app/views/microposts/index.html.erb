@@ -13,18 +13,32 @@
       
 <% @microposts.each do |micropost| %>
 <div class="panel">
-
+  <!--javascript read more toggle-->
   <%= link_to gravatar_for(micropost.user, size: 50), micropost.user %>
   <span class="user"><%= link_to micropost.user.name, micropost.user %></span>
   <span class="content"><%= link_to micropost.title, micropost%></span>
   <span class="content">
-   
-    <%= truncate micropost.content, length: 130 %>
-    <%= link_to 'read more', micropost %> 
+  
+  <% if micropost.content.length > 130 %>
+    <%= truncate(micropost.content, length: 130) %>
+    <%= link_to '...Read more', '', class: "read-more-#{micropost.id}" %>
+    <script>
+      $('.read-more-<%= micropost.id %>').on('click', function(e) {
+        e.preventDefault()
+        $(this).parent().html('<%= escape_javascript micropost.content %>')
+      })
+    </script>
+  <% else %>
+    <%= micropost.content %>
+  <% end %>
+    <%#= truncate micropost.content, length: 130 %>
+    <%#= link_to 'read more', micropost %> 
     <%= image_tag micropost.picture.url if micropost.picture? %>
   </span>
   <span class="content">
+  
   Tag: <%=raw tag_links(micropost.all_tags) %>
+  
   </span>
 
   <!--like function-->

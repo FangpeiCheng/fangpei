@@ -9,8 +9,8 @@ class Goal < ActiveRecord::Base
  
 
   def deadline_correct?
-    if DateTime.parse(self.deadline) > DateTime.parse(self.dream.date) || 
-    DateTime.parse(self.deadline)< Date.today
+    if (DateTime.parse(self.deadline) > DateTime.parse(self.dream.date) )|| 
+    (DateTime.parse(self.deadline)< Date.today)
       errors.add(:deadline, "can't be more than dream's deadline or less than today's date")
     end  
   end
