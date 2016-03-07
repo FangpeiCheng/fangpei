@@ -322,6 +322,7 @@ DEPENDENCIES
   fog (= 1.36.0)
   jbuilder (= 2.2.3)
   jquery-rails (= 4.0.3)
+  jquery-ui-rails
   mini_magick (= 3.8.0)
   pg (= 0.17.1)
   puma (= 2.11.1)
