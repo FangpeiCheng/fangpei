@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
     gem 'rails',        '4.2.2'
     gem 'sass-rails',   '5.0.2'
-    gem 'jquery-ui-rails', '~> 4.2.1'
+    
     gem 'uglifier',     '2.5.3'
     gem 'carrierwave',             '0.10.0'
     gem 'mini_magick',             '3.8.0'
@@ -32,4 +32,4 @@ source 'https://rubygems.org'
     gem 'will_paginate',           '3.0.7'
     gem 'bootstrap-will_paginate', '0.0.10'
     gem 'faker',                   '1.4.2'
-   
+    gem 'rails_admin'
