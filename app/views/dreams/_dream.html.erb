@@ -12,7 +12,19 @@
               </div>
               <!--goal toggle-->
 
-              
+               <div><a class="toggle-trigger">Show explicit goals</a></div>                
+               <div class="toggle-wrap">
+                <% dream.goals.each do |goal| %>
+                <div class="style-single">
+                  <ol id="goals">
+                    <li>
+                      <%= goal.content %> by <%= goal.deadline %>
+                      <span class="date"><%= time_ago_in_words(goal.created_at) %> ago</span>
+                    </li>
+                  </ol>
+                </div>
+                <%end%>
+              </div>
               <%= link_to "Create explicit plans", dream %>
               <%= link_to "Edit", edit_dream_path(dream) %>
               <%= link_to "Delete", dream, method: :delete,
