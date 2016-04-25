@@ -6,7 +6,7 @@ class Dream < ActiveRecord::Base
   validates :content, presence: true, length: { maximum: 300 }
   validates :date, presence: true, :if => :date_correct? #judge the input of the date field
   
-  default_scope { order("datetime(date) ASC") }
+  #default_scope { order("datetime(date) ASC") }
   #returns true only if dream's date exceed today's date, if not, there will be an error.
   def date_correct?
      if DateTime.parse(self.date) < Date.today
