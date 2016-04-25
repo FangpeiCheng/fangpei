@@ -11,11 +11,14 @@ Rails.application.routes.draw do
           member {post :like }
           resources :comments
         end
+        
         resources :relationships,       only: [:create, :destroy]
         
         resources :dreams do 
           resources :goals
         end
+        resources :goals
+        
         root 'microposts#index'
 
           get 'dreammaker'   => 'static_pages#dreammaker'
@@ -23,6 +26,7 @@ Rails.application.routes.draw do
           get 'contact' => 'static_pages#contact'
           get 'signup'  => 'users#new'
           get 'newmicropost' => 'microposts#new'
+          
           get 'tags/:tag', to: 'microposts#index', as: "tag"
           
 

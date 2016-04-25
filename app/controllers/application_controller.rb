@@ -5,11 +5,11 @@ class ApplicationController < ActionController::Base
   protect_from_forgery
   include SessionsHelper
 
-  WillPaginate.per_page = 5
+  WillPaginate.per_page = 8
 
   private
 
-    # Confirms a logged-in user.
+    # ensure the user logged in
     def logged_in_user
       unless logged_in?
         store_location

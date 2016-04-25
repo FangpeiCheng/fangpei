@@ -1,11 +1,20 @@
  <header class="navbar navbar-fixed-top navbar-inverse navbar-custom ">
       <div class="container">
         <!--<span class="glyphicon glyphicon-grain" aria-hidden="true"></span>-->
-        <%= link_to "FiveYears ", root_path, id: "logo" %>
+        <%#= link_to "FiveYears ", root_path, id: "logo" %>
+        <%= link_to root_path, id: "logo" do %>
+        <i class="glyphicon glyphicon-leaf"></i> FiveYears
+        <%end%>
         <nav>
           <ul class="nav navbar-nav navbar-right">
 
             <!--search function start --><!--new line-->
+              
+            
+            
+            
+            <% if logged_in? %>
+              <!--<li><%= link_to current_user.name, current_user %></li>-->
               <li>
                 <%= form_tag(microposts_path, :method => "get", class: "navbar-form", id: "search-form") do %>
 
@@ -19,31 +28,61 @@
            of using a Rails form helper -->
                 <!--<button type="submit">search</button>-->
                 <% end %>
-              </li>   
-
-            
-            <li><%= link_to "Home", root_path %></li>
-            
-            <% if logged_in? %>
-              <!--<li><%= link_to current_user.name, current_user %></li>-->
-
-              <li><%= link_to "Dreammaker", dreams_path %></li>
-              <li><%= link_to "Users", users_path %></li>
+              </li>
+              <%#= link_to "Community", root_path %>  
+              <li>
+                <%= link_to root_path do%>
+                <span class="glyphicon glyphicon-home"></span> Community
+                <%end%>
+              </li>
+              <%#= link_to "Dreammaker", dreams_path %>
+              <li>
+                <%= link_to dreams_path do%>
+                <span class="glyphicon glyphicon-send"></span> Dreammaker
+                <%end%>
+              </li>
+              <%#= link_to "Members", users_path %>
+              <li>
+                <%= link_to users_path do%>
+                <span class="glyphicon glyphicon-user"></span> Members
+                <%end%>
+              </li>
               <li class="dropdown">
+                
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                   <%= current_user.name %> <b class="caret"></b>
                 </a>
                 <ul class="dropdown-menu">
-                  <li><%= link_to "Profile", current_user %></li>
-                  <li><%= link_to "Settings", edit_user_path(current_user) %></li>
-                  <li class="divider"></li>
+                  <%#= link_to "Profile", current_user %>
                   <li>
-                    <%= link_to "Log out", logout_path, method: "delete" %>
+                    <%= link_to current_user do%>
+                    <span class="glyphicon glyphicon-user"></span> Profile
+                    <%end%>
+
+                  </li>
+                  <%#= link_to "Settings", edit_user_path(current_user) %>
+                  <li>
+                    <%= link_to edit_user_path(current_user) do%>
+                    <span class="glyphicon glyphicon-cog"></span> Settings
+                    <%end%>
+                  </li>
+                  <li class="divider"></li>
+                  <%#= link_to "Log out", logout_path, method: "delete" %>
+                  <li>
+                    <%= link_to logout_path, method: "delete" do%>
+                    <span class="glyphicon glyphicon-off"></span> Log out
+                    <%end%>
 
                   </li>
                 </ul>
               </li>
             <% else %>
+                <li>
+                  <%#= link_to "Home", root_path %>
+                  <%= link_to root_path do%>
+                  <span class="glyphicon glyphicon-home"></span> Home
+                <%end%>
+                </li>
                 <li><%= link_to "Sign up", signup_path %></li>
                 <li><%= link_to "Log in", login_path %></li>
                 

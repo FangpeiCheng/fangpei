@@ -15,10 +15,11 @@ class User < ActiveRecord::Base
   has_many :following, through: :active_relationships,  source: :followed
   has_many :followers, through: :passive_relationships, source: :follower
   
+  default_scope { order('created_at DESC') }
 	attr_accessor :remember_token
 	before_save { self.email = email.downcase }
 
-	validates :name, presence: true, length: { in: 9..30 }
+	validates :name, presence: true, length: { in: 9..30 }, uniqueness: { case_sensitive: false }
      VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
      validates :email, presence: true, 
                         format: { with: VALID_EMAIL_REGEX },
@@ -26,6 +27,11 @@ class User < ActiveRecord::Base
      validates :password, presence: true, length: { minimum: 6 }, allow_nil: true#new line
      validates :password_confirmation, presence: true
      has_secure_password
+
+     # where(:name query) -> This would return an exact match of the query
+     def self.search(query)
+      where("name like ?", "%#{query}%") 
+     end
 
      #like function
      def total_likes
@@ -38,18 +44,19 @@ class User < ActiveRecord::Base
 
      
 
-     # Returns the hash digest of a string.
+     # returns the hash digest of a string.
       def User.digest(string)
         cost = ActiveModel::SecurePassword.min_cost ? BCrypt::Engine::MIN_COST :
                                                       BCrypt::Engine.cost
         BCrypt::Password.create(string, cost: cost)
       end
 
-      # Returns a random token.
+      # returns a random token.
       def User.new_token
         SecureRandom.urlsafe_base64
       end
-      # Remembers a user in the database for use in persistent sessions.
+
+      # remembers a user in the database for use in persistent sessions.
       def remember
         self.remember_token = User.new_token
         update_attribute(:remember_digest, User.digest(remember_token))
@@ -58,7 +65,7 @@ class User < ActiveRecord::Base
       def authenticated?(remember_token)
         BCrypt::Password.new(remember_digest).is_password?(remember_token)
       end
-      # Forgets a user.
+      # Forgets a user. may be not used
       def forget
         update_attribute(:remember_digest, nil)
       end
@@ -68,28 +75,33 @@ class User < ActiveRecord::Base
         reset_sent_at < 2.hours.ago
       end
 
-  # Returns a user's status feed.
-
-      def feed
+      #returns user's following posts
+      def feed_post
+        #query the database to find the following posts using the follower_id
         following_ids = "SELECT followed_id FROM relationships
                      WHERE  follower_id = :user_id"
-        #Micropost.where("user_id IN (#{following_ids})
-                     #OR user_id = :user_id", user_id: id)
-        #Micropost.all    #where("user_id = ?", id)
-        Dream.where("user_id = ?", id) #new line
+        Micropost.where("user_id IN (#{following_ids})", user_id: id)
+
       end
-      # Follows a user.
-  def follow(other_user)
-    active_relationships.create(followed_id: other_user.id)
-  end
 
-  # Unfollows a user.
-  def unfollow(other_user)
-    active_relationships.find_by(followed_id: other_user.id).destroy
-  end
+      #returns user's own dreams
+      def feed
+        #query the database to find dreams using the user's id 
+        Dream.where("user_id = ?", id)
+      end
 
-  # Returns true if the current user is following the other user.
-  def following?(other_user)
-    following.include?(other_user)
-  end
+      # define a method to follow a user.
+      def follow(other_user)
+        active_relationships.create(followed_id: other_user.id)
+      end
+
+      # define a method to unfollow a user.
+      def unfollow(other_user)
+        active_relationships.find_by(followed_id: other_user.id).destroy
+      end
+
+      # judge whether the current user follow others', returns true if the user is following others.
+      def following?(other_user)
+        following.include?(other_user)
+      end
 end

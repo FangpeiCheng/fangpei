@@ -9,7 +9,33 @@
       -webkit-box-sizing: border-box;
       box-sizing:         border-box;
     }
+/*#AD235E*/
+/*
+.btn-custom {
+  background-color: #BC4676;
+  color: #fff;
+}*/
+
+.date {
+  color: $gray-light;
+}
+
+   label.required:after {
+    content: " *";
+    color: red;
+   }
    
+.load-more {
+  background-color: #428bca;
+  padding: 10px;
+  color: #fff;
+  border-radius: 5px;
+}
+
+.load-more-container{
+  
+  text-align: center;
+}
 
    /* change the navbar's color
 
@@ -54,9 +80,15 @@
     }
 
 
+   
 
-    /* timeline */
-
+    /* timeline stylesheet */
+.panel-body {
+    padding: 10px 0px;
+}
+.timeline-title {
+      line-height: 1; /*new line, line space*/
+    }
 .timeline {
   list-style: none;
   padding: 20px 0 20px;
@@ -99,7 +131,7 @@
   float: right;
   border: 1px solid #d4d4d4;
   border-radius: 2px;
-  padding: 20px;
+  padding: 8px 20px 8px 20px;    /* 20px */
   position: relative;
   -webkit-box-shadow: 0 1px 6px rgba(0, 0, 0, 0.175);
   box-shadow: 0 1px 6px rgba(0, 0, 0, 0.175);
@@ -148,21 +180,6 @@
   border-bottom-left-radius: 50%;
 }
 
-/*.timeline-badge.primary {
-  background-color: #2e6da4 !important;
-}
-
-.timeline-badge.success {
-  background-color: #3f903f !important;
-}
-
-.timeline-badge.warning {
-  background-color: #f0ad4e !important;
-}
-
-.timeline-badge.danger {
-  background-color: #d9534f !important;
-}*/
 
 .timeline-badge.info {
   background-color: #5bc0de !important;
@@ -183,8 +200,9 @@
     
 
     .panel {
-      background-color: #d5eefb ;
-      padding: 5px 20px 5px 20px;;
+      background-color:#fafafa;
+      /* background-color: #d5eefb ; #fafafa;#f8f2da;*/
+      padding: 5px 20px 5px 20px ;
     }
 
     /* universal */
@@ -192,6 +210,7 @@
 
     body {
       padding-top: 45px;
+      /*background-color: #fafafa ;*/
       
     }
 
@@ -222,6 +241,7 @@
       letter-spacing: -2px;
       margin-bottom: 10px;
       text-align: center;
+      padding: 30px ; /*new line, add padding*/
     }
     h3 {
       font-size: 1.8em;
@@ -239,13 +259,17 @@
       
       /*color: #777;*/
     }
+    
 
     p {
       font-size: 1.1em;
       line-height: 1.7em;
     }
 
+    
+  
     /* header */
+
 
     #logo {
       float: left;
@@ -406,6 +430,19 @@
         color: $state-danger-text;
       }
     }
+    .checkbox {
+  margin-top: -10px;
+  margin-bottom: 10px;
+  span {
+    margin-left: 20px;
+    font-weight: normal;
+  }
+}
+
+#session_remember_me {
+  width: auto;
+  margin-left: 0;
+}
     
     /* microposts */
 

@@ -1,6 +1,6 @@
 class Micropost < ActiveRecord::Base
       belongs_to :user    # Association with User
-      belongs_to :dream
+      belongs_to :dream   # Association with Dream, 
       
       has_many :comments, dependent: :destroy
       
@@ -11,55 +11,57 @@ class Micropost < ActiveRecord::Base
       has_many :taggings, dependent: :destroy
       has_many :tags, through: :taggings, dependent: :destroy
       validates :user_id, presence: true
-      validates :content, presence: true, length: { maximum: 200 }
-      validates :title, presence: true, length: { maximum: 40 }
+      validates :content, presence: true, length: { maximum: 400 }
+      validates :title, presence: true, length: { maximum: 50 }
       validate  :picture_size
 
       default_scope -> { order(created_at: :desc) }
 
 
-#like function start
-def self.by_likes
-  select('microposts.*, coalesce(value, 0) as likes').
-  joins('left join post_likes on micropost_id=microposts.id').
-  order('likes desc')
-end
+   #order by the number of post_likes, actually not used, set it aside.
+  def self.by_likes
+    select('microposts.*, coalesce(value, 0) as likes').
+    joins('left join post_likes on micropost_id=microposts.id').
+    order('likes desc')
+  end
 
-def likes
-  read_attribute(:likes) || post_likes.sum(:value)
-end
-#like function end
+  #return the sum of post_like
+  def likes
+    read_attribute(:likes) || post_likes.sum(:value)
+  end
+
 
 
   def self.search(query)
-    # where(:title, query) -> This would return an exact match of the query
-    where("title like ?", "%#{query}%") 
+    #return the posts whose title or content equals the query
+    where("title like ? or content like ?", "%#{query}%","%#{query}%") 
   end
   
   def all_tags=(names)
-  self.tags = names.split(",").map do |name|
+
+    self.tags = names.split(",").map do |name|
       Tag.where(name: name.strip).first_or_create!
+    end
   end
-end
 
-def all_tags
-  self.tags.map(&:name).join(", ")
-end
+  def all_tags
 
-def self.tagged_with(name)
-  Tag.find_by_name!(name).microposts
-end
+    self.tags.map(&:name).join(", ")
+  end
 
-private
+  def self.find_tag(name)
+    
+    Tag.find_by_name!(name).microposts
+  end
+
+  private
 
     # Validates the size of an uploaded picture.
     def picture_size
-      if picture.size > 5.megabytes
-        errors.add(:picture, "should be less than 5MB")
+      if picture.size > 2.megabytes
+        errors.add(:picture, "The size should be less than 2MB")
       end
     end
-
-
 
 
 end

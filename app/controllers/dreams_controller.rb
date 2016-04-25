@@ -1,14 +1,18 @@
 class DreamsController < ApplicationController
-	#before_action :logged_in_user, only: [:index, :edit, :update, :destroy]
-
+	
   before_action :correct_user,   only: [:edit, :update, :destory]
   before_action :find_dream, only: [:show, :edit, :update, :destroy]
   #before_action :correct_user,   only: :destroy
   def index
-          @dreams = Dream.order("created_at DESC").paginate(page: params[:page])
           if logged_in?
             @dream  = current_user.dreams.build
-            @feed_items = current_user.feed.paginate(page: params[:page])
+            @feed_items = current_user.feed
+            # remind to create dreams if no dreams, reminde start
+            if @feed_items.length==0
+              flash[:alert] = "You have no dreams. Create one now to get started."
+            end  
+            #remind end
+
           end
         
     end
@@ -18,6 +22,8 @@ class DreamsController < ApplicationController
 
     end
     def show
+      #@dream = Dream.find(params[:id])
+      #@goal = @dream.goals.build
     end
 
     def create
@@ -34,7 +40,9 @@ class DreamsController < ApplicationController
 
     def edit
     end
+  
 
+  
   def update
     if @dream.update(dream_params)
       redirect_to dreams_path
@@ -42,9 +50,7 @@ class DreamsController < ApplicationController
       render 'edit'
     end
   end
-
   
-
   def destroy
     #flash[:success] = "User deleted"
     @dream.destroy

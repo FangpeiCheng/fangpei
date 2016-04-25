@@ -1,20 +1,22 @@
 <div class="filter">
-<%= form_for [@dream, @dream.goals.build] do |f| %>  
-<%#= form_for @goal do |f| %>
+
+<!--build form for nested goal model-->
+<%= form_for [@goal.dream, @goal] do |f| %>
+<%#= form_for [@dream, @dream.goals.build] do |f| %>  
+
 <div class="row">
   <div class="col-md-12">
-  	<h2><%= link_to @dream.user.name, @dream.user %> create short-term goals for the dream <%= link_to @dream.name, '#'%> by <%= @dream.date %></h2>
-<%#= @dream.content %>
+  
 </div>
 </div>
 
  <%= render 'shared/error_messages', object: f.object %>
  <div class="row">
       <div class="col-md-8">
-        <%= f.label :Goal %>
+        <%= f.label :Goal, class: 'required' %>
       </div>
       <div class="col-md-4">
-        <%= f.label :Deadline %>
+        <%= f.label :Deadline, class: 'required' %>
       </div>
 </div>
 <div class="row">
@@ -28,7 +30,7 @@
 </div>
 <div class="row">
       <div class="col-md-12">
-        <%= f.label :Description %>
+        <%= f.label :Description, class: 'required' %>
       </div>
 </div>
 <div class="row">

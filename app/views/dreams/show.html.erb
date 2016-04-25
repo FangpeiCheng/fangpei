@@ -1,42 +1,17 @@
-<div>
-<%= render 'goals/form'%>
-<table class="table table-hover table-condensed">
-  <thead>
-    <tr>
-      <th>Goal</th>
-      <th>Description</th>
-      <th>Deadline</th>
-      <th>Last Updated</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
+<br/>
+  <h2><%#= link_to @dream.user.name, @dream.user %>Start to create short-term goals for the dream <%= link_to @dream.name, dreams_path %> by <%= @dream.date %></h2><br/>
+  <p>Dream: <%= @dream.name%></p>
+  <p>Description: <%= @dream.content %></p>
+  <p>Deadline: <%= @dream.date %></p>
+  <span class="timestamp">
+    Created <%= time_ago_in_words(@dream.created_at) %> ago.
+  </span><br/>
 
-  <tbody>
-    <% @dream.goals.each do |goal| %>
-    <tr>
-      <%#= link_to dream.user.name, dream.user %>
-      <td><%= goal.name %></td>
-      <td><%= goal.content %></td>
-      <td><%= goal.deadline%></td>
-      <td><%= time_ago_in_words(goal.created_at) unless goal.created_at.blank?%> ago</td>
-      <%#= time_ago_in_words(goal.created_at)%>
-      <%#= goal.created_at%>
-      <!--eg. 2016-02-08 19:29:07 UTC -->
-      <%#= time_ago_in_words(goal.created_at) unless goal.created_at.blank?%>
-      <!-- eg. 2 hours ago-->
-      <td><%= link_to "Show", '#' %></td>
-      <td><%= link_to "Edit",  '#'%></td> <!--edit_goal_path(goal)-->
-      <td><%= link_to "Delete", [goal.dream, goal], method: :delete,
-                                           data: { confirm: "You sure?" } %></td>
-    </tr>
-  <% end %>
-  </tbody>
+<!--return to the former page which is dreams_path-->
+<%= link_to dreams_path, class: "btn btn-primary" do%>
+<i class="glyphicon glyphicon-arrow-left"></i> Back
+<%end%>&nbsp;
 
-</table>
-</div>
-<%#= will_paginate %>
-
-
-
-
-
+<%= link_to dream_goals_path(@dream), class: "btn btn-primary" do%>
+Create an explicit plan <i class="glyphicon glyphicon-arrow-right"></i>
+<%end%>

@@ -3,7 +3,9 @@
         <span class="date"><%= time_ago_in_words(comment.created_at) %> ago</span>
        <p>
         <%= comment.content %>
-        <%= link_to "Delete", [comment.micropost, comment], method: :delete,
-                                           data: { confirm: "You sure?" } %>
+        <%= link_to [comment.micropost, comment], method: :delete,
+                                           data: { confirm: "You sure?" } do%>
+        <span class="glyphicon glyphicon-remove"></span>
+        <%end%>
        </p>
 </li>

@@ -1,2 +1,3 @@
+//the user already follow one user, now he or she wants to unfollow
 $("#follow_form").html("<%= escape_javascript(render('users/unfollow')) %>");
 $("#followers").html('<%= @user.followers.count %>');

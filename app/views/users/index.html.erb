@@ -1,13 +1,61 @@
 <% provide(:title, 'All users') %>
-<h1>All users</h1>
-<%= will_paginate %>
+<h1>All Members</h1>
+<!--search the user's name to find that person-->
+<%= form_tag(users_path, :method => "get", class: "navbar-form", id: "search-form") do %>
 
-<ul class="users">
-  <% @users.each do |user| %>
-    <li>
-      <%= gravatar_for user, size: 50 %>
-      <%= link_to user.name, user %>
-    </li>
-  <% end %>
-</ul>
-<%= will_paginate %>
+                <div class="input-group searchfield">
+                  <%= text_field_tag :search, params[:search], class: "form-control", placeholder: "Search users" %>
+                  <span class="input-group-addon">
+                  <i class="glyphicon glyphicon-search"></i>
+                  </span>
+                </div>
+<% end %>
+
+
+<div class="field1">
+  <%= render @users %>
+</div>
+<br/>
+
+<div class="load-more-container">
+    <!-- hide our refreshing image so that we show it when making ajax call via jquery -->
+        
+	<%= image_tag "refresh_animate.gif", style: "display:none;", class: "loading-image" %>
+	<%= link_to "Load More", users_path, class: "load-more" %>
+
+</div>
+</div>
+<%#= will_paginate %>
+<script type="text/javascript">
+$(document).ready(function () {
+    // when the load more link is clicked
+    $('a.load-more').click(function (e) {
+        // prevent default click 
+        e.preventDefault();
+
+        $('.load-more').hide();
+        $('.loading-image').show();
+        // get the last id, store it in 'last-id'
+        var last_id = $('.record').last().attr('data-id');
+        // use low level ajax to pass last user id
+        $.ajax({
+
+            type: "GET",
+            //define the url of the loaded data
+            url: $(this).attr('href'),
+            // send the last id to app
+            data: {
+                id: last_id
+            },
+            //response type
+            dataType: "script",
+            //success result 
+            success: function () {
+                $('.loading-image').hide();
+                $('.load-more').show();
+            }
+        });
+
+    });
+});
+</script>

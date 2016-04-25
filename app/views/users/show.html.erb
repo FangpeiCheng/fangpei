@@ -1,13 +1,21 @@
 <% provide(:title, @user.name) %>
+<br/>
+<div>
 <div class="row">
-  <aside class="col-md-4">
+
     <section>
-      <%= render 'shared/user_info' %>
+      <%= render 'shared/user_prof' %>
     </section>
     <section class="stats">
-      <%= render 'shared/stats' %>
+      <%= render 'shared/follow_panel' %>
     </section>
-  </br>
+    
+    <% if current_user?(@user) %>
+    <p>
+    <%= link_to "Find more you want to follow", users_path %>
+    </p>
+    <%end%>
+    
     <%= link_to new_micropost_path, class: "btn btn-primary", data: { no_turbolink: true } do %>
       <i class="glyphicon glyphicon-plus"></i> New Post
     <% end %>
@@ -16,41 +24,50 @@
     <br/><br/>
     Obtain <%= current_user.total_likes %> <span class="glyphicon glyphicon-thumbs-up"></span>
     
-  </aside>
 
-
-  <div class="col-md-8">
     <br/>
     <%= render 'follow_form' if logged_in? %>
     <br/>
+    
     <div class="container">
       <ul class="nav nav-tabs">
-        
+        <!--use the nav-tabs to show users' feedback including the dreams, posts and following posts-->
         <li class="active"><a data-toggle="tab" href="#dream">Dreams (<%= @user.dreams.count %>)</a></li>
         
         <li><a data-toggle="tab" href="#micropost">Microposts (<%= @user.microposts.count %>)</a></li>
+        <li><a data-toggle="tab" href="#follow_micropost">Following Posts (<%= @user.feed_post.count %>)</a></li>
     
       </ul>
 
       <div class="tab-content">
         <div id="dream" class="tab-pane fade in active">
-          <section class="micropost">
+          
             <% @user.dreams.each do |dream| %>
-            <!--Here is a problem, if not use <br/>, it will not change line automatically, which need to think-->
-            <span class="user"><%= link_to dream.name, dream %></span><br/>
-            <span class="user"><%= dream.content %></span><br/>
-            <span class="content"><%= dream.date%></span><br/><br/>
+            <div class="panel">
+            <%= link_to dream.name, dream %> by <%= dream.date%><br>
+            <%= dream.content %><br/>
+            <div class="date"><%= time_ago_in_words(dream.created_at) %> ago</div>
+             </div>
             <%end%>
-          </section>
+         
+        
         </div>
 
         <div id="micropost" class="tab-pane fade">
           <ol class="microposts">
             <%= render @microposts %>
           </ol>
-          <%= will_paginate @microposts %>
+          
+        </div>
+        <div id="follow_micropost" class="tab-pane fade">
+          <ol class="microposts">
+            <%= render 'shared/feed_item' %>
+          </ol>
+          
         </div>
       </div>
+    
     </div>
   </div>
-</div>
+
+

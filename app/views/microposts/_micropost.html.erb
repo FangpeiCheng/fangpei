@@ -1,20 +1,64 @@
-<li id="micropost-<%= micropost.id %>">
-      <%= link_to gravatar_for(micropost.user, size: 50), micropost.user %>
-      <span class="user"><%= link_to micropost.user.name, micropost.user %></span>
-      <span class="content"><%= micropost.title %></span> 
-     
+<div class="record" data-id="<%= micropost.id %>">
+<ol class="microposts">
 
-      <span class="content">
-        <%= micropost.content %>
-        <%= image_tag micropost.picture.url if micropost.picture? %>
-      </span>
-      <span class="content">
-        Tag: <%=raw tag_links(micropost.all_tags) %>
-      </span>
-       
-     <span class="timestamp">
-        Posted <%= time_ago_in_words(micropost.created_at) %> ago.
-     </span>
- </li>
+  <div class="panel">
+
+  <%= link_to gravatar_for(micropost.user, size: 50), micropost.user %>
+  <span class="user"><%= link_to micropost.user.name, micropost.user %></span>
+  <span class="content"><%= link_to micropost.title, micropost%></span>
+  <span class="content">
+  <!--use the js to truncate the content-->
+  <% if micropost.content.length > 150 %>
+    <%= truncate(micropost.content, length: 150) %>
+    <%= link_to 'Read more', '', class: "read-more-#{micropost.id}" %>
+    <script>
+      $('.read-more-<%= micropost.id %>').on('click', function(e) {
+        e.preventDefault()
+        $(this).parent().html('<%= escape_javascript micropost.content %>')
+      })
+    </script>
+  <% else %>
+    <%= micropost.content %>
+  <% end %>
+
+    <%#= truncate micropost.content, length: 130 %>
+    <%#= link_to 'read more', micropost %> 
+    <%= image_tag micropost.picture.url if micropost.picture? %>
+  </span>
+  
+
+  <% if micropost.all_tags.length > 0 %><!--if there was tag, then show label 'Tag:', if not, hide it.-->
+  <span class="content">
+  Tag: <%=raw tag_links(micropost.all_tags) %>
+  </span>
+  <%end%>
+  <!--thumb-up function-->
+  <span class="content">
+    <%= pluralize micropost.likes, "" %>
+    <span class="glyphicon glyphicon-thumbs-up"></span>
+    <% if current_user && current_user.can_like_for?(micropost) %>
+    | <%= link_to like_micropost_path(micropost, value: 1), method: "post" do%>
+    <i class="glyphicon glyphicon-thumbs-up"></i>
+    <%end%>
+    | <%= link_to like_micropost_path(micropost, value: -1), method: "post" do%>
+    <i class="glyphicon glyphicon-thumbs-down"></i>
+    <%end%>
+    <% end %>
+    &nbsp;&nbsp;&nbsp;
+    <%= link_to micropost do%>
+    <i class="glyphicon glyphicon-comment"></i>
+  <%end%>
+    
+  </span>
+  
+  <span class="timestamp">
+    Posted <%= time_ago_in_words(micropost.created_at) %> ago.
+  </span>
+</div>
+</ol>
+</div>
+
+
+
 
 

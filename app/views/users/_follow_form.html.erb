@@ -1,8 +1,10 @@
 <% unless current_user?(@user) %>
   <div id="follow_form">
+  	<!--if following, then other's profile's button change to unfollow-->
   <% if current_user.following?(@user) %>
     <%= render 'unfollow' %>
   <% else %>
+  <!--if unfollowed, then other's profile's button change to follow-->
     <%= render 'follow' %>
   <% end %>
   </div>

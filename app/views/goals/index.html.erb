@@ -1,0 +1,61 @@
+<br/>
+<h2><%= link_to @goal.user.name, @goal.user %> create short-term goals for the dream <%= link_to @dream.name, @dream %> by <%= @dream.date %></h2>
+<%= link_to new_dream_goal_path, class: "btn btn-primary", data: { no_turbolink: true } do %>
+      <i class="glyphicon glyphicon-plus"></i> Add new goal 
+    <% end %><br/><br/>
+<%#= link_to 'New Comment', new_micropost_comment_path %>
+
+<div>
+<%#= render 'form'%>
+<table class="table table-hover table-condensed">
+  <thead>
+    <tr>
+      <th>Goal</th>
+      <th>Description</th>
+      <th>Deadline</th>
+      <th>Last Updated</th>
+      <th colspan="2"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @goals.each do |goal| %>
+    <tr>
+      <%#= link_to dream.user.name, dream.user %>
+      <td><%= goal.name %></td>
+      <td><%= goal.content %></td>
+      <td><%= goal.deadline%></td>
+      <td><%= time_ago_in_words(goal.created_at) unless goal.created_at.blank?%> ago</td>
+      <%#= time_ago_in_words(goal.created_at)%>
+      <%#= goal.created_at%>
+      <!--eg. 2016-02-08 19:29:07 UTC -->
+      <%#= time_ago_in_words(goal.created_at) unless goal.created_at.blank?%>
+      <!-- eg. 2 hours ago-->
+      <td><%= link_to edit_dream_goal_path(goal.dream, goal) do %>
+          <span class="glyphicon glyphicon-pencil"></span>
+          <%end%>
+      </td> 
+      
+      <td><%= link_to [goal.dream, goal], method: :delete,
+                                           data: { confirm: "You sure?"} do %>
+          <span class="glyphicon glyphicon-remove"></span>
+          <%end%>
+      </td>
+
+    </tr>
+  <% end %>
+  </tbody>
+
+</table>
+<%= will_paginate %>
+<br/>
+
+<%= link_to @dream, class: "btn btn-primary" do%>
+<i class="glyphicon glyphicon-arrow-left"></i> Back
+<%end%>
+</div>
+
+
+
+
+

@@ -6,6 +6,7 @@ class CommentsController < ApplicationController
     end
 
 	def create
+		#use post's id to find post
 		@micropost = Micropost.find(params[:micropost_id])
 		@comment = @micropost.comments.create(params[:comment].permit(:content))
         @comment.user_id = current_user.id
@@ -15,6 +16,7 @@ class CommentsController < ApplicationController
 				format.html {redirect_to micropost_path(@micropost)}
 				format.js #render comments/create.js.erb
 			end
+
 		else
 			render 'new'
 		end
@@ -31,7 +33,7 @@ class CommentsController < ApplicationController
 
     def correct_user
         @comment = current_user.comments.find_by(id: params[:id])
-        redirect_to root_url if @comment.nil?
+        redirect_to root_url if @comment.nil? #no comment, return the root url
     end
 
 	

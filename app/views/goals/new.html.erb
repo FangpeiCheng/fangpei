@@ -1,15 +1,7 @@
+<div>
 <h1>New Goal</h1>
-    <% if @goal.errors.any? %>
-      <div id="error_explanation">
-        <div class="alert alert-danger">
-          The form contains <%= pluralize(@goal.errors.count, "error") %>.
-        </div>
-        <ul>
-        <% @goal.errors.full_messages.each do |msg| %>
-          <li><%= msg %></li>
-        <% end %>
-        </ul>
-      </div>
-    <% end %>
+    
     <%#= render 'shared/error_messages', object: f.object %>
-    <p><%=render 'form'%></p>
+<p><%=render 'form'%></p>
+<%= link_to 'Back', dream_goals_path(@goal.dream)%>
+</div>

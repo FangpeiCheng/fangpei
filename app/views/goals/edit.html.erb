@@ -1,3 +1,8 @@
-<h1> Edit </h1>
- <p><%=render 'form'%></p>
- <%=link_to "Cancel", goal_path%>
+<div>
+<h1> Editing Goal </h1>
+<p><%=render 'form'%></p>
+ 
+ <!-- /dreams/:dream_id/goals/ -->
+
+<%=link_to "Cancel", dream_goals_path(@goal.dream)%>
+</div>
